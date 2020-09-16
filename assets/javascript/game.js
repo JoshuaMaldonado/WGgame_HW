@@ -13,7 +13,7 @@ document.onkeyup = function(event) {
   var userLetter = event.key;
   // makes sure the user selects a letter
   var checkforletter = /[a-z]/gi;
-    if (!checkforletter.test(userChoice)) {
+    if (!checkforletter.test(userLetter)) {
       alert("please enter a letter");
     }
     else {
@@ -21,7 +21,7 @@ document.onkeyup = function(event) {
     }
 
 // resets the random letter if the user loses
-if (guessesRemaining <= 0) {
+if (guessesRemaining < 0) {
   losses++;
   document.getElementById("losses").innerHTML = losses++;
   console.log("You lost!");
