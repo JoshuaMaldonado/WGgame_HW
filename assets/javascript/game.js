@@ -1,60 +1,56 @@
-var letters = ["a", "b", "c"];
+let answerpool = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+let guesses = [];
+let guessesRemaining  = 9;
+let dubs = 0;
+let losses = 0;
 
-var guessedLetters = [];
+var randomIndex = Math.floor(Math.random() * answerpool.length);
+var randomletter = answerpool[randomIndex];
 
-var letterToGuess = null;
+console.log(randomletter);
 
-var guessesLeft = 9;
+document.onkeyup = function(event) {
+  var userLetter = event.key;
+  // makes sure the user selects a letter
+  var checkforletter = /[a-z]/gi;
+    if (!checkforletter.test(userChoice)) {
+      alert("please enter a letter");
+    }
+    else {
+      console.log(userLetter);
+    }
 
-var wins = 0;
-var losses = 0;
+// resets the random letter if the user loses
+if (guessesRemaining <= 0) {
+  losses++;
+  document.getElementById("losses").innerHTML = losses++;
+  console.log("You lost!");
+  alert("You lost!");
+  guessesRemaining = 9;
+  guesses = [];
+  document.getElementById("guesses").innerHTML = guesses;
+  document.getElementById("guessesRemaining").innerHTML = 9;
+  randomIndex = Math.floor(Math.random() * answerpool.length);
+  randomletter = answerpool[randomIndex];
+  console.log(randomletter);
+}
 
-
-var updateGuessesLeft = function() {
-  document.querySelector("#guesses-left").innerHTML = guessesLeft;
-};
-
-var updateLetterToGuess = function() {
-  letterToGuess = letters[Math.floor(Math.random() * letters.length)];
-};
-
-var updateGuessesSoFar = function() {
-  document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(", ");
-};
-
-
-var reset = function() {
-  guessesLeft = 9;
-  guessedLetters = [];
-  updateLetterToGuess();
-  updateGuessesLeft();
-  updateGuessesSoFar();
-};
-
-
-updateLetterToGuess();
-updateGuessesLeft();
-
-
-document.onkeydown = function(event) {
-  guessesLeft--;
-  var letter = event.key.toLowerCase();
-  guessedLetters.push(letter);
-  updateGuessesLeft();
-  updateGuessesSoFar();
-
-
-  
-  if (letter === letterToGuess) {
-    wins++;
-    document.querySelector("#wins").innerHTML = wins;
-    reset();
-  }
-
-  
-  if (guessesLeft === 0) {
-    losses++;
-    document.querySelector("#losses").innerHTML = losses;
-    reset();
+  // compares the random letter and user letter
+  if (randomletter === userLetter) {
+    console.log("You won!");
+    alert("You won!");
+    document.getElementById("dubs").innerHTML = dubs++;
+    guesses = [];
+    document.getElementById("guesses").innerHTML = guesses;
+    randomIndex = Math.floor(Math.random() * answerpool.length);
+    randomletter = answerpool[randomIndex];
+    console.log(computerChoice);
+    guessesRemaining = 9;
+    document.getElementById("guessesRemaining").innerHTML = 9;
+  } else {
+    console.log("Guess again!");
+    document.getElementById("guessesRemaining").innerHTML = guessesRemaining--;
+    guesses.push(userLetter);
+    document.getElementById("guesses").innerHTML = guesses;
   }
 };
